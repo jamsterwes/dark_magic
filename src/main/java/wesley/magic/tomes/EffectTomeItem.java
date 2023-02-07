@@ -1,16 +1,11 @@
 package wesley.magic.tomes;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
-import wesley.magic.ExampleMod;
 
 public class EffectTomeItem extends BaseTomeItem {
     // Hold the status effect for this tome
@@ -27,6 +22,8 @@ public class EffectTomeItem extends BaseTomeItem {
 
     @Override
     public void onTomeUsed(ServerPlayerEntity player, Entity entity) {
-        entity.damage(DamageSource.player(player).setUsesMagic(), 5.0f);
+        if (entity instanceof LivingEntity) {
+            ((LivingEntity)entity).addStatusEffect(new StatusEffectInstance(_effect, _duration, _amplifier), player);
+        }
     }
 }

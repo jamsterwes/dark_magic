@@ -8,6 +8,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
+import wesley.magic.effects.DecayStatusEffect;
 import wesley.magic.networking.combat.TomeCombatListener;
 import wesley.magic.tomes.*;
 
@@ -20,14 +21,19 @@ public class ExampleMod implements ModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger("modid");
 
+	// Decay Effect
+	public static final DecayStatusEffect DECAY = Registry.register(
+		Registries.STATUS_EFFECT, new Identifier("dark_magic", "decay"),
+		new DecayStatusEffect());
+
 	// TODO: move this somewhere else?
 	// Spider Tome
 	public static final EffectTomeItem TOME_SPIDER_EYE = Registry.register(
 		Registries.ITEM, new Identifier("dark_magic", "tome_spider_eye"),
 		new EffectTomeItem(
 			"spider_tome",
-			StatusEffects.INSTANT_DAMAGE, 0, 5,
-			15, SoundEvents.ENTITY_SPIDER_HURT, new FabricItemSettings())
+			DECAY, 5 * 20, 1,
+			20, SoundEvents.ENTITY_SPIDER_HURT, new FabricItemSettings().maxCount(1))
 	);
 
 	@Override
