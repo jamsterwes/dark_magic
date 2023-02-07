@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###",
+        "#B#",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "dark_magic:essence_of_the_undead"
+        },
+        "B": {
+            "item": "dark_magic:tome_spider_eye"
+        }
+    },
+    "result": {
+        "item": "dark_magic:tome_devour",
+        "count": 1
+    }
+}
