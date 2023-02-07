@@ -42,7 +42,7 @@ public class ExampleMod implements ModInitializer {
 		Registries.ITEM, new Identifier("dark_magic", "tome_spider_eye"),
 		new EffectTomeItem(
 			"spider_tome",
-			DECAY, 5 * 20, 1,
+			DECAY, 5 * 20, 0,
 			20, SoundEvents.ENTITY_SPIDER_HURT, new FabricItemSettings().maxCount(1))
 	);
 	

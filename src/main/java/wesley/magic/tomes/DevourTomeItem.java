@@ -10,7 +10,7 @@ import wesley.magic.state.ServerState;
 
 public class DevourTomeItem extends EffectTomeItem {
     public DevourTomeItem(StatusEffect devour) {
-        super("devour_tome", devour, 5 * 20, 1,
+        super("devour_tome", devour, 5 * 20, 0,
 			20, SoundEvents.ENTITY_SPIDER_HURT, new FabricItemSettings().maxCount(1));
     }
 
