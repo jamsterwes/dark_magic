@@ -23,6 +23,7 @@ public class EffectTomeItem extends BaseTomeItem {
     @Override
     public void onTomeUsed(ServerPlayerEntity player, Entity entity) {
         if (entity instanceof LivingEntity) {
+            
             ((LivingEntity)entity).addStatusEffect(new StatusEffectInstance(_effect, _duration, _amplifier), player);
         }
     }

@@ -7,20 +7,16 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.particle.DustParticleEffect;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import wesley.magic.networking.DarkMagicNetworkingConstants;
 import wesley.magic.networking.combat.TomeCombatListener;
@@ -43,6 +39,11 @@ public abstract class BaseTomeItem extends Item {
 
         // Register this tome with networking
         TomeCombatListener.addHandler(tomeID, (ServerPlayerEntity player, Entity other) -> onTomeUsed(player, other));
+    }
+
+    @Override
+    public boolean hasGlint(ItemStack itemStack) {
+        return true;
     }
 
     @Override
