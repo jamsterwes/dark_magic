@@ -3,6 +3,7 @@ package wesley.magic.effects;
 import java.util.UUID;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
@@ -44,6 +45,25 @@ public class DevourStatusEffect extends StatusEffect {
                 // Heal player
                 player.heal(hpt);
             }
+
+            // Did we kill the entity?
+            if (entity.isDead()) removeDevourKey(entity);
         }
+    }
+
+    @Override
+    public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
+        // Remove devour key
+        removeDevourKey(entity);
+
+        // Call super
+        super.onRemoved(entity, attributes, amplifier);
+    }
+
+    // Helper to remove devour map key
+    private void removeDevourKey(LivingEntity entity) {
+        ServerState state = ServerState.getServerState(entity.world.getServer());
+        state.devourMap.remove(entity.getUuid());
+        state.markDirty();
     }
 }
