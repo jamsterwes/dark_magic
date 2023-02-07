@@ -8,6 +8,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
+import wesley.magic.networking.combat.TomeCombatListener;
 import wesley.magic.tomes.*;
 
 import org.slf4j.Logger;
@@ -24,8 +25,9 @@ public class ExampleMod implements ModInitializer {
 	public static final EffectTomeItem TOME_SPIDER_EYE = Registry.register(
 		Registries.ITEM, new Identifier("dark_magic", "tome_spider_eye"),
 		new EffectTomeItem(
+			"spider_tome",
 			StatusEffects.INSTANT_DAMAGE, 0, 5,
-			7.5, SoundEvents.ENTITY_SPIDER_HURT, new FabricItemSettings())
+			15, SoundEvents.ENTITY_SPIDER_HURT, new FabricItemSettings())
 	);
 
 	@Override
@@ -35,5 +37,8 @@ public class ExampleMod implements ModInitializer {
 		// Proceed with mild caution.
 
 		LOGGER.info("Hello Fabric world!");
+
+		// Register server listener
+		TomeCombatListener.register();
 	}
 }
