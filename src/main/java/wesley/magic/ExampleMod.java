@@ -43,7 +43,8 @@ public class ExampleMod implements ModInitializer {
 		new EffectTomeItem(
 			"spider_tome",
 			DECAY, 5 * 20, 0,
-			20, SoundEvents.ENTITY_SPIDER_HURT, new FabricItemSettings().maxCount(1))
+			20, SoundEvents.ENTITY_SPIDER_HURT, 20*4,
+			new FabricItemSettings().maxCount(1))
 	);
 	
 	// Devour Tome

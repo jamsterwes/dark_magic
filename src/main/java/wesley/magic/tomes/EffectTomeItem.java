@@ -12,8 +12,8 @@ public class EffectTomeItem extends BaseTomeItem {
     private StatusEffect _effect;
     private int _duration, _amplifier;
 
-    public EffectTomeItem(String tomeID, StatusEffect effect, int duration, int amplifier, double maxUseDistance, SoundEvent useSound, Settings settings) {
-        super(tomeID, maxUseDistance, useSound, settings);
+    public EffectTomeItem(String tomeID, StatusEffect effect, int duration, int amplifier, double maxUseDistance, SoundEvent useSound, int cooldownTicks, Settings settings) {
+        super(tomeID, maxUseDistance, useSound, cooldownTicks, settings);
 
         this._effect = effect;
         this._duration = duration;

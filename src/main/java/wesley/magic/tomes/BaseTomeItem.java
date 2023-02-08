@@ -26,9 +26,10 @@ public abstract class BaseTomeItem extends Item {
     private double _maxUseDistance;
     private SoundEvent _useSound;
     private String _tomeID;
+    private int _cooldown;
 
     // TODO: abstract away Settings?
-    public BaseTomeItem(String tomeID, double maxUseDistance, SoundEvent useSound, Settings settings) {
+    public BaseTomeItem(String tomeID, double maxUseDistance, SoundEvent useSound, int cooldownTicks, Settings settings) {
         // Initialize Item
         super(settings);
 
@@ -36,6 +37,7 @@ public abstract class BaseTomeItem extends Item {
         this._tomeID = tomeID;
         this._maxUseDistance = maxUseDistance;
         this._useSound = useSound;
+        this._cooldown = cooldownTicks;
 
         // Register this tome with networking
         TomeCombatListener.addHandler(tomeID, (ServerPlayerEntity player, Entity other) -> onTomeUsed(player, other));
@@ -67,6 +69,11 @@ public abstract class BaseTomeItem extends Item {
             if (dist <= _maxUseDistance) {
                 // Play sound
                 user.playSound(_useSound, 1.0f, 1.0f);
+
+                // Set cooldown
+                if (_cooldown > 0) {
+                    ((PlayerEntity)user).getItemCooldownManager().set(this, this._cooldown);
+                }
 
                 // TODO: Draw particle trail
                 
