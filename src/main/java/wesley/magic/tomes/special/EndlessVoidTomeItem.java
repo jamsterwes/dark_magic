@@ -1,22 +1,18 @@
 package wesley.magic.tomes.special;
 
-import net.minecraft.block.NetherPortalBlock;
-import net.minecraft.client.render.DimensionEffects.Overworld;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ChunkTicketType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.world.dimension.DimensionTypes;
-import net.minecraft.world.poi.PointOfInterestStorage;
+import net.minecraft.world.chunk.Chunk;
+import wesley.magic.ExampleMod;
 import wesley.magic.tomes.TomeProperties;
 import wesley.magic.tomes.UseTomeItem;
-import wesley.magic.ExampleMod;
 
 import net.minecraft.world.TeleportTarget;
 import net.fabricmc.fabric.api.dimension.v1.FabricDimensions;
@@ -51,13 +47,27 @@ public class EndlessVoidTomeItem extends UseTomeItem {
         // Get current & target world
         ServerWorld currentWorld = player.getWorld();
         ServerWorld targetWorld = player.getServer().getWorld(dimension);
+        int targetMinY = targetWorld.getDimension().minY();
+        int targetHeight = targetWorld.getDimension().height();
 
         // Get target position
         double scaleFactor = currentWorld.getDimension().coordinateScale() / targetWorld.getDimension().coordinateScale();
-        Vec3d newPos = origPos.multiply(scaleFactor, 1.0f, scaleFactor);
+        ExampleMod.LOGGER.info("Coord scale factor: " + Double.toString(scaleFactor));
+        Vec3d newPos = origPos.multiply(scaleFactor, 0.0f, scaleFactor);
 
         // Teleport player
-        TeleportTarget target = new TeleportTarget(newPos, Vec3d.ZERO, 0.0f, 0.0f);
-        FabricDimensions.teleport(player, targetWorld, target);
+        // FIND suitable Y to teleport to
+        Chunk c = targetWorld.getChunk(new BlockPos(newPos));
+        for (int y = targetMinY + targetHeight + 16; y >= targetMinY; y--) {
+            if (!targetWorld.isAir(new BlockPos(newPos.add(0, y - 1, 0)))) {
+                ExampleMod.LOGGER.info("New pos: " + newPos.add(0, y, 0).toString());
+                TeleportTarget target = new TeleportTarget(newPos.add(0, y, 0), Vec3d.ZERO, 0.0f, 0.0f);
+                FabricDimensions.teleport(player, targetWorld, target);
+                break;
+            }
+        }
+
+        // Otherwise, oops we failed
+        // TODO: return false here?
     }
 }

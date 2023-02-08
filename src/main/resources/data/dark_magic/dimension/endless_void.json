@@ -1,5 +1,5 @@
 {
-    "type": "minecraft:overworld",
+    "type": "dark_magic:endless_void",
     "generator": {
         "type": "minecraft:flat",
         "settings": {
@@ -9,11 +9,7 @@
             "layers": [
                 {
                     "block": "minecraft:bedrock",
-                    "height": 1
-                },
-                {
-                    "block": "minecraft:white_concrete",
-                    "height": 5
+                    "height": 16
                 }
             ],
             "structures": {
