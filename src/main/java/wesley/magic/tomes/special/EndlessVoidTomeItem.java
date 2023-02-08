@@ -18,6 +18,9 @@ import wesley.magic.tomes.TomeProperties;
 import wesley.magic.tomes.UseTomeItem;
 import wesley.magic.ExampleMod;
 
+import net.minecraft.world.TeleportTarget;
+import net.fabricmc.fabric.api.dimension.v1.FabricDimensions;
+
 public class EndlessVoidTomeItem extends UseTomeItem {
 
     private RegistryKey<World> endlessVoidDim;
@@ -44,31 +47,15 @@ public class EndlessVoidTomeItem extends UseTomeItem {
         // Get original position
         Vec3d origPos = player.getPos();
 
-        // File a chunk ticket
-
-        ServerWorld currentWorld = player.getWorld();
+        // Get target world
         ServerWorld targetWorld = player.getServer().getWorld(dimension);
-        // TODO: fix scale?
 
-        Vec3d newPos = origPos.multiply(currentWorld.getDimension().coordinateScale() / targetWorld.getDimension().coordinateScale());
-        BlockPos newPosBlock = new BlockPos((int)newPos.x, (int)newPos.y, (int)newPos.z);
-        ChunkPos newPosChunk = new ChunkPos(newPosBlock);
-        
-        // PointOfInterestStorage pointOfInterestStorage = targetWorld.getPointOfInterestStorage();
-        // pointOfInterestStorage.preloadChunks(targetWorld, newPosBlock, 16 * 3);
-        
-        ExampleMod.LOGGER.info("Loading chunk @ " + newPosChunk.toString());
+        // Get target position
+        float scaleFactor = currentWorld.getDimension().coordinateScale() / targetWorld.getDimension().coordinateScale();
+        Vec3d newPos = origPos.multiply(scaleFactor, 1.0f, scaleFactor);
 
-        targetWorld.getChunkManager().addTicket(
-            ChunkTicketType.PORTAL,
-            newPosChunk,
-            3,
-            newPosBlock
-        );
-
-        player = (ServerPlayerEntity)player.moveToWorld(targetWorld);
-        player.setYaw(0.0f);
-        player.setPitch(0.0f);
-        player.refreshPositionAfterTeleport(newPos);
+        // Teleport player
+        TeleportTarget target = new TeleportTarget(newPos, Vec3d.ZERO, 0.0f, 0.0f);
+        FabricDimensions.teleport(player, targetWorld, target);
     }
 }
