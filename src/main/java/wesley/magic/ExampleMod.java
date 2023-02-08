@@ -13,6 +13,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import wesley.magic.effects.DecayStatusEffect;
 import wesley.magic.effects.DevourStatusEffect;
+import wesley.magic.networking.combat.TomeAlchemyListener;
 import wesley.magic.networking.combat.TomeCombatListener;
 import wesley.magic.tomes.*;
 import wesley.magic.tomes.special.DevourTomeItem;
@@ -62,8 +63,9 @@ public class ExampleMod implements ModInitializer {
 
 		LOGGER.info("Hello Fabric world!");
 
-		// Register server listener
+		// Register server listeners
 		TomeCombatListener.register();
+		TomeAlchemyListener.register();
 
 		// Add items to dark magic group
 		ItemGroupEvents.modifyEntriesEvent(DARK_MAGIC_GROUP).register(content -> {

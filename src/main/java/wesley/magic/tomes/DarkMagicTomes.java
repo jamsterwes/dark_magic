@@ -8,10 +8,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import wesley.magic.ExampleMod;
 import wesley.magic.tomes.special.DevourTomeItem;
 import wesley.magic.tomes.special.EffectTomeItem;
+import wesley.magic.tomes.special.FlockTomeItem;
 import wesley.magic.tomes.special.RiftTomeItem;
 
 public class DarkMagicTomes {
@@ -21,14 +24,18 @@ public class DarkMagicTomes {
 		SoundEvents.ENTITY_SPIDER_HURT,
 		"decay_tome",
 		20 * 4
-	);
+	)
+	.addLore(Text.translatable("item.dark_magic.tome_spider_eye.tooltip1").formatted(Formatting.DARK_RED, Formatting.ITALIC))
+	.addLore(Text.translatable("item.dark_magic.tome_spider_eye.tooltip2").formatted(Formatting.DARK_RED, Formatting.ITALIC));
 
 	public static final TomeProperties DEVOUR_PROPERTIES = new TomeProperties(
 		20,
 		SoundEvents.ENTITY_SPIDER_HURT,
 		"devour_tome",
 		20 * 3
-	);
+	)
+	.addLore(Text.translatable("item.dark_magic.tome_devour.tooltip1").formatted(Formatting.DARK_RED, Formatting.ITALIC))
+	.addLore(Text.translatable("item.dark_magic.tome_devour.tooltip2").formatted(Formatting.DARK_RED, Formatting.ITALIC));
 
 	// SPIDER (Tier I)
 	public static final EffectTomeItem TOME_SPIDER_EYE = Registry.register(
@@ -51,8 +58,9 @@ public class DarkMagicTomes {
 		5,
 		SoundEvents.ENTITY_ENDERMAN_TELEPORT,
 		"rift_tome",
-		20 * 5
-	);
+		20 * 5)
+		.addLore(Text.translatable("item.dark_magic.tome_rifts.tooltip1").formatted(Formatting.DARK_AQUA, Formatting.ITALIC))
+		.addLore(Text.translatable("item.dark_magic.tome_rifts.tooltip2").formatted(Formatting.DARK_AQUA, Formatting.ITALIC));
 
 	// ENDER_PEARL (Tier II)
 	public static final RiftTomeItem TOME_RIFTS = Registry.register(
@@ -60,8 +68,25 @@ public class DarkMagicTomes {
 		new RiftTomeItem(RIFT_PROPERTIES, new FabricItemSettings().maxCount(1))
 	);
 
+	///////////////////////////////////////////////////////////////////////
+
+	public static final TomeProperties FLOCK_PROPERTIES = new TomeProperties(
+		5,
+		SoundEvents.ENTITY_GENERIC_EAT,
+		"flock_tome",
+		20 * 5);
+		// .addLore(Text.translatable("item.dark_magic.flock_tome.tooltip1").formatted(Formatting.DARK_AQUA, Formatting.ITALIC))
+		// .addLore(Text.translatable("item.dark_magic.flock_tome.tooltip2").formatted(Formatting.DARK_AQUA, Formatting.ITALIC));
+	
+	public static final FlockTomeItem TOME_FLOCK = Registry.register(
+		Registries.ITEM, new Identifier("dark_magic", "tome_flock"),
+		new FlockTomeItem(FLOCK_PROPERTIES, new FabricItemSettings().maxCount(1))
+	);
+
+	///////////////////////////////////////////////////////////////////////
+
 	// Dark Magic Tab
-	private static final ItemGroup TOMES_GROUP = FabricItemGroup.builder(
+	public static final ItemGroup TOMES_GROUP = FabricItemGroup.builder(
 		new Identifier("dark_magic", "tomes"))
 		.icon(() -> new ItemStack(TOME_DEVOUR))
 		.build();
@@ -72,6 +97,7 @@ public class DarkMagicTomes {
 			content.add(TOME_SPIDER_EYE);
 			content.add(TOME_DEVOUR);
 			content.add(TOME_RIFTS);
+			content.add(TOME_FLOCK);
 		});
     }
 }

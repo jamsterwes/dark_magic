@@ -1,36 +1,32 @@
 package wesley.magic.tomes;
 
 import java.util.List;
-import java.util.UUID;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import wesley.magic.networking.DarkMagicNetworkingConstants;
-import wesley.magic.networking.combat.TomeCombatListener;
+import wesley.magic.networking.combat.TomeAlchemyListener;
 
-public abstract class BaseTomeItem extends Item {
+public abstract class BlockTomeItem extends Item {
 
     private TomeProperties _props;
 
     // TODO: abstract away Settings?
-    public BaseTomeItem(TomeProperties props, Settings settings) {
+    public BlockTomeItem(TomeProperties props, Settings settings) {
         // Initialize Item
         super(settings);
 
@@ -38,7 +34,7 @@ public abstract class BaseTomeItem extends Item {
         this._props = props;
 
         // Register this tome with networking
-        TomeCombatListener.addHandler(_props.TomeID, (ServerPlayerEntity player, Entity other) -> onTomeUsed(player, other));
+        TomeAlchemyListener.addHandler(_props.TomeID, (ServerPlayerEntity player, BlockPos pos) -> onTomeUsed(player, pos));
     }
 
     @Override
@@ -63,9 +59,15 @@ public abstract class BaseTomeItem extends Item {
         HitResult hit = client.crosshairTarget;
 
         // If hit an entity?
-        if (hit.getType() == HitResult.Type.ENTITY) {
-            // Cast to entity hit
-            EntityHitResult entityHit = (EntityHitResult)hit;
+        if (hit.getType() == HitResult.Type.BLOCK) {
+            // Cast to block hit
+            BlockHitResult blockHit = (BlockHitResult)hit;
+
+            // Can we even use?
+            Block block = world.getBlockState(blockHit.getBlockPos()).getBlock();
+            if (!canTomeTransform(block)) {
+                return TypedActionResult.fail(user.getStackInHand(hand));
+            }
 
             // Measure distance first
             double dist = hit.getPos().distanceTo(user.getEyePos());
@@ -85,20 +87,23 @@ public abstract class BaseTomeItem extends Item {
                 // Call subclass effect
                 // TODO: make this packet more robust
                 PacketByteBuf buf = PacketByteBufs.create();
-                UUID uuid = entityHit.getEntity().getUuid();
 
                 buf.writeString(_props.TomeID);
-                buf.writeUuid(uuid);
+                buf.writeBlockPos(blockHit.getBlockPos());
 
-                ClientPlayNetworking.send(DarkMagicNetworkingConstants.SHOOT_TOME_PACKET_ID, buf);
+                ClientPlayNetworking.send(DarkMagicNetworkingConstants.TRANSFORM_TOME_PACKET_ID, buf);
+
+                // Don't affect anything in-hand
+                return TypedActionResult.success(user.getStackInHand(hand));
             }
         }
-
-        // TODO: potentially don't succeed if no raycast hit
-        // Don't affect anything in-hand
-        return TypedActionResult.success(user.getStackInHand(hand));
+        
+        return TypedActionResult.fail(user.getStackInHand(hand));
     }
 
+    // Called by tomes to see if we can use it?
+    public abstract boolean canTomeTransform(Block block);
+
     // Called by tomes to apply their effects
-    public abstract void onTomeUsed(ServerPlayerEntity player, Entity other);
+    public abstract void onTomeUsed(ServerPlayerEntity player, BlockPos pos);
 }
