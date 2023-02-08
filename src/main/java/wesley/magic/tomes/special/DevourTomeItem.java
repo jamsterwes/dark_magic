@@ -1,19 +1,16 @@
-package wesley.magic.tomes;
+package wesley.magic.tomes.special;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.item.ChorusFruitItem;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundEvents;
 import wesley.magic.ExampleMod;
 import wesley.magic.state.ServerState;
+import wesley.magic.tomes.DarkMagicTomes;
 
 public class DevourTomeItem extends EffectTomeItem {
     public DevourTomeItem(StatusEffect devour) {
-        super("devour_tome", devour, 5 * 20, 0,
-			20, SoundEvents.ENTITY_SPIDER_HURT, 20*3,
-            new FabricItemSettings().maxCount(1));
+        super(DarkMagicTomes.DEVOUR_PROPERTIES, devour, 20 * 5, 0, new FabricItemSettings().maxCount(1));
     }
 
     @Override

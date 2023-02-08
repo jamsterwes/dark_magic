@@ -15,6 +15,8 @@ import wesley.magic.effects.DecayStatusEffect;
 import wesley.magic.effects.DevourStatusEffect;
 import wesley.magic.networking.combat.TomeCombatListener;
 import wesley.magic.tomes.*;
+import wesley.magic.tomes.special.DevourTomeItem;
+import wesley.magic.tomes.special.EffectTomeItem;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,23 +38,6 @@ public class ExampleMod implements ModInitializer {
 		Registries.STATUS_EFFECT, new Identifier("dark_magic", "devour"),
 		new DevourStatusEffect());
 
-	// TODO: move this somewhere else?
-	// Spider Tome
-	public static final EffectTomeItem TOME_SPIDER_EYE = Registry.register(
-		Registries.ITEM, new Identifier("dark_magic", "tome_spider_eye"),
-		new EffectTomeItem(
-			"spider_tome",
-			DECAY, 5 * 20, 0,
-			20, SoundEvents.ENTITY_SPIDER_HURT, 20*4,
-			new FabricItemSettings().maxCount(1))
-	);
-	
-	// Devour Tome
-	public static final DevourTomeItem TOME_DEVOUR = Registry.register(
-		Registries.ITEM, new Identifier("dark_magic", "tome_devour"),
-		new DevourTomeItem(DEVOUR)
-	);
-
 	public static final Item FLESHY_PASTE = Registry.register(
 		Registries.ITEM, new Identifier("dark_magic", "fleshy_paste"),
 		new Item(new FabricItemSettings())
@@ -65,8 +50,8 @@ public class ExampleMod implements ModInitializer {
 
 	// Dark Magic Tab
 	private static final ItemGroup DARK_MAGIC_GROUP = FabricItemGroup.builder(
-		new Identifier("dark_magic", "magic_group"))
-		.icon(() -> new ItemStack(TOME_SPIDER_EYE))
+		new Identifier("dark_magic", "dark_ingredients"))
+		.icon(() -> new ItemStack(ESSENCE_OF_THE_UNDEAD))
 		.build();
 
 	@Override
@@ -82,10 +67,11 @@ public class ExampleMod implements ModInitializer {
 
 		// Add items to dark magic group
 		ItemGroupEvents.modifyEntriesEvent(DARK_MAGIC_GROUP).register(content -> {
-			content.add(TOME_SPIDER_EYE);
-			content.add(TOME_DEVOUR);
 			content.add(FLESHY_PASTE);
 			content.add(ESSENCE_OF_THE_UNDEAD);
 		});
+
+		// Register tomes
+		DarkMagicTomes.register();
 	}
 }

@@ -1,9 +1,11 @@
 {
     "item.dark_magic.tome_spider_eye": "Tome of Decay",
     "item.dark_magic.tome_devour": "Tome of Devouring",
+    "item.dark_magic.tome_rifts": "Tome of Rifts",
     "item.dark_magic.fleshy_paste": "Fleshy Paste",
     "item.dark_magic.essence_of_the_undead": "Essence of the Undead",
     "effect.dark_magic.decay": "Decay",
     "effect.dark_magic.devour": "Devour",
-    "itemGroup.dark_magic.magic_group": "Dark Magic"
+    "itemGroup.dark_magic.dark_ingredients": "Dark Ingredients",
+    "itemGroup.dark_magic.tomes": "Tomes"
 }

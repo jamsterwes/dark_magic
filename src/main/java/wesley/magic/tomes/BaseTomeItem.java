@@ -23,24 +23,18 @@ import wesley.magic.networking.combat.TomeCombatListener;
 
 public abstract class BaseTomeItem extends Item {
 
-    private double _maxUseDistance;
-    private SoundEvent _useSound;
-    private String _tomeID;
-    private int _cooldown;
+    private TomeProperties _props;
 
     // TODO: abstract away Settings?
-    public BaseTomeItem(String tomeID, double maxUseDistance, SoundEvent useSound, int cooldownTicks, Settings settings) {
+    public BaseTomeItem(TomeProperties props, Settings settings) {
         // Initialize Item
         super(settings);
 
         // Save tome-specific properties
-        this._tomeID = tomeID;
-        this._maxUseDistance = maxUseDistance;
-        this._useSound = useSound;
-        this._cooldown = cooldownTicks;
+        this._props = props;
 
         // Register this tome with networking
-        TomeCombatListener.addHandler(tomeID, (ServerPlayerEntity player, Entity other) -> onTomeUsed(player, other));
+        TomeCombatListener.addHandler(_props.TomeID, (ServerPlayerEntity player, Entity other) -> onTomeUsed(player, other));
     }
 
     @Override
@@ -66,13 +60,13 @@ public abstract class BaseTomeItem extends Item {
             double dist = hit.getPos().distanceTo(user.getEyePos());
 
             // If distance in range?
-            if (dist <= _maxUseDistance) {
+            if (dist <= _props.MaxUseDistance) {
                 // Play sound
-                user.playSound(_useSound, 1.0f, 1.0f);
+                user.playSound(_props.UseSound, 1.0f, 1.0f);
 
                 // Set cooldown
-                if (_cooldown > 0) {
-                    ((PlayerEntity)user).getItemCooldownManager().set(this, this._cooldown);
+                if (_props.CooldownTicks > 0) {
+                    ((PlayerEntity)user).getItemCooldownManager().set(this, _props.CooldownTicks);
                 }
 
                 // TODO: Draw particle trail
@@ -82,7 +76,7 @@ public abstract class BaseTomeItem extends Item {
                 PacketByteBuf buf = PacketByteBufs.create();
                 UUID uuid = entityHit.getEntity().getUuid();
 
-                buf.writeString(_tomeID);
+                buf.writeString(_props.TomeID);
                 buf.writeUuid(uuid);
 
                 ClientPlayNetworking.send(DarkMagicNetworkingConstants.SHOOT_TOME_PACKET_ID, buf);
