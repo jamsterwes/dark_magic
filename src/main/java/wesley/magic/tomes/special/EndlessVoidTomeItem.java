@@ -47,11 +47,12 @@ public class EndlessVoidTomeItem extends UseTomeItem {
         // Get original position
         Vec3d origPos = player.getPos();
 
-        // Get target world
+        // Get current & target world
+        ServerWorld currentWorld = player.getWorld();
         ServerWorld targetWorld = player.getServer().getWorld(dimension);
 
         // Get target position
-        float scaleFactor = currentWorld.getDimension().coordinateScale() / targetWorld.getDimension().coordinateScale();
+        double scaleFactor = currentWorld.getDimension().coordinateScale() / targetWorld.getDimension().coordinateScale();
         Vec3d newPos = origPos.multiply(scaleFactor, 1.0f, scaleFactor);
 
         // Teleport player
