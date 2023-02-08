@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "dark_magic:item/tome_endless_void"
+    }
+}

@@ -15,6 +15,7 @@ import wesley.magic.effects.DecayStatusEffect;
 import wesley.magic.effects.DevourStatusEffect;
 import wesley.magic.networking.combat.TomeAlchemyListener;
 import wesley.magic.networking.combat.TomeCombatListener;
+import wesley.magic.networking.combat.TomeUseListener;
 import wesley.magic.tomes.*;
 import wesley.magic.tomes.special.DevourTomeItem;
 import wesley.magic.tomes.special.EffectTomeItem;
@@ -66,6 +67,7 @@ public class ExampleMod implements ModInitializer {
 		// Register server listeners
 		TomeCombatListener.register();
 		TomeAlchemyListener.register();
+		TomeUseListener.register();
 
 		// Add items to dark magic group
 		ItemGroupEvents.modifyEntriesEvent(DARK_MAGIC_GROUP).register(content -> {

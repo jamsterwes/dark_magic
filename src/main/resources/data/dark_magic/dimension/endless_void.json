@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:overworld",
+    "generator": {
+        "type": "minecraft:flat",
+        "settings": {
+            "lakes": false,
+            "features": false,
+            "biome": "dark_magic:void",
+            "layers": [
+                {
+                    "block": "minecraft:bedrock",
+                    "height": 1
+                },
+                {
+                    "block": "minecraft:white_concrete",
+                    "height": 5
+                }
+            ],
+            "structures": {
+                "structures": {}
+            },
+            "structure_overrides": []
+        }
+    }
+}

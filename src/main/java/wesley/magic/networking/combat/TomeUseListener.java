@@ -10,13 +10,14 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.math.BlockPos;
 import wesley.magic.networking.DarkMagicNetworkingConstants;
 
-public class TomeCombatListener {
+public class TomeUseListener {
 
-    private static HashMap<String, TomeShootHandler> _handlers = new HashMap<>();
+    private static HashMap<String, TomeUseHandler> _handlers = new HashMap<>();
 
-    public static void addHandler(String tomeID, TomeShootHandler handler) {
+    public static void addHandler(String tomeID, TomeUseHandler handler) {
         // TODO: QoL checks... yada yada yada
 
         if (_handlers.containsKey(tomeID)) return;
@@ -25,22 +26,15 @@ public class TomeCombatListener {
     }
 
     public static void register() {
-        ServerPlayNetworking.registerGlobalReceiver(DarkMagicNetworkingConstants.SHOOT_TOME_PACKET_ID, (MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) -> {
-            // TODO: TODO
+        ServerPlayNetworking.registerGlobalReceiver(DarkMagicNetworkingConstants.USE_TOME_PACKET_ID, (MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) -> {
 
             String tomeID = buf.readString();
-            UUID uuid = buf.readUuid();
-
-            Entity entity = player.getWorld().getEntity(uuid);
-            double dist = player.getEyePos().distanceTo(entity.getPos());
-            // TODO: actually read Tome stats
-            if (dist > 7.5f) return;
-
+            
             // TODO: warning message unknown tome
             if (!_handlers.containsKey(tomeID)) return;
 
             server.execute(() -> {
-                _handlers.get(tomeID).onShoot(player, entity);
+                _handlers.get(tomeID).onUse(player);
             });
         });
     }

@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#O#",
+        "OBO",
+        "#O#"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:end_crystal"
+        },
+        "O": {
+            "item": "minecraft:obsidian"
+        },
+        "B": {
+            "item": "dark_magic:tome_rifts"
+        }
+    },
+    "result": {
+        "item": "dark_magic:tome_endless_void",
+        "count": 1
+    }
+}

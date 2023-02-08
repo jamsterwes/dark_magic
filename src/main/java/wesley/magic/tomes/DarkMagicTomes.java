@@ -14,6 +14,7 @@ import net.minecraft.util.Identifier;
 import wesley.magic.ExampleMod;
 import wesley.magic.tomes.special.DevourTomeItem;
 import wesley.magic.tomes.special.EffectTomeItem;
+import wesley.magic.tomes.special.EndlessVoidTomeItem;
 import wesley.magic.tomes.special.FlockTomeItem;
 import wesley.magic.tomes.special.RiftTomeItem;
 
@@ -85,6 +86,21 @@ public class DarkMagicTomes {
 
 	///////////////////////////////////////////////////////////////////////
 
+	public static final TomeProperties ENDLESS_VOID_PROPERTIES = new TomeProperties(
+		5,
+		SoundEvents.ENTITY_ENDERMAN_TELEPORT,
+		"endless_void_tome",
+		20 * 1);
+		// .addLore(Text.translatable("item.dark_magic.flock_tome.tooltip1").formatted(Formatting.DARK_AQUA, Formatting.ITALIC))
+		// .addLore(Text.translatable("item.dark_magic.flock_tome.tooltip2").formatted(Formatting.DARK_AQUA, Formatting.ITALIC));
+	
+	public static final EndlessVoidTomeItem TOME_ENDLESS_VOID = Registry.register(
+		Registries.ITEM, new Identifier("dark_magic", "tome_endless_void"),
+		new EndlessVoidTomeItem(ENDLESS_VOID_PROPERTIES, new FabricItemSettings().maxCount(1))
+	);
+
+	///////////////////////////////////////////////////////////////////////
+
 	// Dark Magic Tab
 	public static final ItemGroup TOMES_GROUP = FabricItemGroup.builder(
 		new Identifier("dark_magic", "tomes"))
@@ -97,6 +113,7 @@ public class DarkMagicTomes {
 			content.add(TOME_SPIDER_EYE);
 			content.add(TOME_DEVOUR);
 			content.add(TOME_RIFTS);
+			content.add(TOME_ENDLESS_VOID);
 			content.add(TOME_FLOCK);
 		});
     }
