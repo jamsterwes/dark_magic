@@ -43,6 +43,7 @@ public class EndlessVoidTomeItem extends UseTomeItem {
         }
     }
 
+    // TODO: fix height issue here, maybe find first available height to come back?
     private void teleportToDimension(ServerPlayerEntity player, RegistryKey<World> dimension) {
         // Get original position
         Vec3d origPos = player.getPos();
