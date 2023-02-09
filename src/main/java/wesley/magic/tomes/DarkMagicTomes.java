@@ -38,6 +38,15 @@ public class DarkMagicTomes {
 	.addLore(Text.translatable("item.dark_magic.tome_devour.tooltip1").formatted(Formatting.DARK_RED, Formatting.ITALIC))
 	.addLore(Text.translatable("item.dark_magic.tome_devour.tooltip2").formatted(Formatting.DARK_RED, Formatting.ITALIC));
 
+	public static final TomeProperties BLOODLUST_PROPERTIES = new TomeProperties(
+		20,
+		SoundEvents.ENTITY_SPIDER_HURT,
+		"bloodlust_tome",
+		20 * 3
+	)
+	.addLore(Text.translatable("item.dark_magic.tome_bloodlust.tooltip1").formatted(Formatting.DARK_RED, Formatting.ITALIC))
+	.addLore(Text.translatable("item.dark_magic.tome_bloodlust.tooltip2").formatted(Formatting.DARK_RED, Formatting.ITALIC));
+
 	// SPIDER (Tier I)
 	public static final EffectTomeItem TOME_SPIDER_EYE = Registry.register(
 		Registries.ITEM, new Identifier("dark_magic", "tome_spider_eye"),
@@ -50,7 +59,13 @@ public class DarkMagicTomes {
 	// SPIDER (Tier II)
 	public static final DevourTomeItem TOME_DEVOUR = Registry.register(
 		Registries.ITEM, new Identifier("dark_magic", "tome_devour"),
-		new DevourTomeItem(ExampleMod.DEVOUR)
+		new DevourTomeItem(DEVOUR_PROPERTIES, ExampleMod.DEVOUR, false)
+	);
+	
+	// SPIDER (Tier III)
+	public static final DevourTomeItem TOME_BLOODLUST = Registry.register(
+		Registries.ITEM, new Identifier("dark_magic", "tome_bloodlust"),
+		new DevourTomeItem(BLOODLUST_PROPERTIES, ExampleMod.DEVOUR, true)
 	);
 
 	///////////////////////////////////////////////////////////////////////
@@ -112,6 +127,7 @@ public class DarkMagicTomes {
 		ItemGroupEvents.modifyEntriesEvent(TOMES_GROUP).register(content -> {
 			content.add(TOME_SPIDER_EYE);
 			content.add(TOME_DEVOUR);
+			content.add(TOME_BLOODLUST);
 			content.add(TOME_RIFTS);
 			content.add(TOME_ENDLESS_VOID);
 			content.add(TOME_FLOCK);

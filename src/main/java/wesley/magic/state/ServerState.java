@@ -11,16 +11,19 @@ import net.minecraft.world.World;
 
 public class ServerState extends PersistentState {
     
-    public HashMap<UUID, UUID> devourMap = new HashMap<>();
+    public HashMap<UUID, DevourState> devourMap = new HashMap<>();
 
     @Override
     public NbtCompound writeNbt(NbtCompound nbt) {
         // Create devour map
         NbtCompound devourMapCompound = new NbtCompound();
-        devourMap.forEach((UUID entity, UUID player) -> {
-            devourMapCompound.putString(String.valueOf(entity), String.valueOf(player));
+        NbtCompound devourMapFeedingCompound = new NbtCompound();
+        devourMap.forEach((UUID entity, DevourState state) -> {
+            devourMapCompound.putString(String.valueOf(entity), String.valueOf(state.player));
+            devourMapFeedingCompound.putBoolean(String.valueOf(entity), state.feeding);
         });
         nbt.put("devourMap", devourMapCompound);
+        nbt.put("devourMapFeeding", devourMapFeedingCompound);
         return nbt;
     }
 
@@ -28,15 +31,17 @@ public class ServerState extends PersistentState {
         ServerState serverState = new ServerState();
 
         NbtCompound devourMapTag = tag.getCompound("devourMap");
+        NbtCompound devourMapFeedingTag = tag.getCompound("devourMapFeeding");
         devourMapTag.getKeys().forEach(key -> {
             // Get entity
             UUID entity = UUID.fromString(key);
 
             // Get player
             UUID player = UUID.fromString(devourMapTag.getString(key));
+            boolean feeding = devourMapFeedingTag.getBoolean(key);
 
             // Add to map
-            serverState.devourMap.put(entity, player);
+            serverState.devourMap.put(entity, new DevourState(player, feeding));
         });
 
         return serverState;

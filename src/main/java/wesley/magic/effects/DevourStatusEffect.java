@@ -8,6 +8,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;
+import wesley.magic.state.DevourState;
 import wesley.magic.state.ServerState;
 
 public class DevourStatusEffect extends StatusEffect {
@@ -16,6 +17,7 @@ public class DevourStatusEffect extends StatusEffect {
 
     private final float dpt = 2.0f;  // Damage / apply
     private final float hpt = 1.0f;  // Heal / apply
+    private final int fpt = 1;  // Feed / apply
 
 
     private final int ticksPerEffect = 20;
@@ -39,11 +41,22 @@ public class DevourStatusEffect extends StatusEffect {
             ServerState serverState = ServerState.getServerState(entity.world.getServer());
             if (serverState.devourMap.containsKey(uuid)) {
                 // Get player
-                UUID playerUUID = serverState.devourMap.get(uuid);
-                PlayerEntity player = entity.world.getPlayerByUuid(playerUUID);
+                DevourState devourState = serverState.devourMap.get(uuid);
+
+                // CHECK IF PLAYER UUID IS VALID
+                PlayerEntity player = entity.world.getPlayerByUuid(devourState.player);
+                if (player == null) {
+                    removeDevourKey(entity);
+                    return;
+                }
 
                 // Heal player
                 player.heal(hpt);
+
+                // Feed player?
+                if (devourState.feeding) {
+                    player.getHungerManager().add(fpt, 1.0f);
+                }
             }
 
             // Did we kill the entity?
