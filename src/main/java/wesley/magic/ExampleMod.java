@@ -16,6 +16,7 @@ import wesley.magic.effects.DevourStatusEffect;
 import wesley.magic.networking.combat.TomeAlchemyListener;
 import wesley.magic.networking.combat.TomeCombatListener;
 import wesley.magic.networking.combat.TomeUseListener;
+import wesley.magic.scepters.DarkMagicScepters;
 import wesley.magic.tomes.*;
 import wesley.magic.tomes.special.DevourTomeItem;
 import wesley.magic.tomes.special.EffectTomeItem;
@@ -77,5 +78,6 @@ public class ExampleMod implements ModInitializer {
 
 		// Register tomes
 		DarkMagicTomes.register();
+		DarkMagicScepters.register();
 	}
 }

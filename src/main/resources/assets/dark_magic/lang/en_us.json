@@ -18,5 +18,6 @@
     "effect.dark_magic.decay": "Decay",
     "effect.dark_magic.devour": "Devour",
     "itemGroup.dark_magic.dark_ingredients": "Dark Ingredients",
-    "itemGroup.dark_magic.tomes": "Tomes"
+    "itemGroup.dark_magic.tomes": "Tomes",
+    "item.dark_magic.diamond_scepter": "Diamond Scepter"
 }
