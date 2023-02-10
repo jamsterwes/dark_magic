@@ -1,0 +1,33 @@
+{
+  "type": "dark_magic:char",
+  "generator": {
+    "type": "minecraft:flat",
+    "settings": {
+      "biome": "dark_magic:char",
+      "lakes": false,
+      "features": false,
+      "layers": [
+        {
+          "block": "minecraft:bedrock",
+          "height": 1
+        },
+        {
+          "block": "minecraft:blackstone",
+          "height": 47
+        },
+        {
+          "block": "minecraft:deepslate",
+          "height": 8
+        },
+        {
+          "block": "minecraft:coal_block",
+          "height": 7
+        },
+        {
+          "block": "minecraft:grass_block",
+          "height": 1
+        }
+      ]
+    }
+  }
+}

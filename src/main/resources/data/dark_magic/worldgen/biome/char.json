@@ -1,0 +1,34 @@
+{
+  "temperature": 0.8,
+  "downfall": 0,
+  "precipitation": "none",
+  "temperature_modifier": "none",
+  "creature_spawn_probability": 0.999,
+  "effects": {
+    "sky_color": 13284010,
+    "fog_color": 8354678,
+    "water_color": 6769924,
+    "water_fog_color": 5258764,
+    "grass_color": 4143404,
+    "foliage_color": 4143404,
+    "particle": {
+      "options": {
+        "type": "smoke"
+      },
+      "probability": 0.05
+    }
+  },
+  "spawners": {
+    "monster": [
+      {
+        "type": "minecraft:wither_skeleton",
+        "weight": 1,
+        "minCount": 5,
+        "maxCount": 50
+      }
+    ]
+  },
+  "spawn_costs": {},
+  "carvers": {},
+  "features": []
+}
