@@ -1,0 +1,26 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#E#",
+        "EVE",
+        "OEO"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:chain"
+        },
+        "E": {
+            "item": "dark_magic:paracausal_core"
+        },
+        "V": {
+            "item": "minecraft:end_crystal"
+        },
+        "O": {
+            "item": "minecraft:obsidian"
+        }
+    },
+    "result": {
+        "item": "dark_magic:crystal_of_balor",
+        "count": 1
+    }
+}

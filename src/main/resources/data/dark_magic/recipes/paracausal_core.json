@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:smithing",
+    "base": {
+        "item": "minecraft:ender_eye"
+    },
+    "addition": {
+        "item": "dark_magic:superposition_book"
+    },
+    "result": {
+        "item": "dark_magic:paracausal_core"
+    }
+}

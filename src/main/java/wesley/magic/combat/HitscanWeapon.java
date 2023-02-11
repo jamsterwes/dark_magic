@@ -21,13 +21,14 @@ public abstract class HitscanWeapon extends DarkMagicItem {
         if (!world.isClient) return super.use(world, user, hand);
 
         // Perform hitscan
-        EntityHitResult hit = Hitscan.playerHitscan(user, 50.0f);
+        EntityHitResult hit = Hitscan.playerHitscan(user, 100.0f);
 
         if (hit != null) {
             onHit(user, hit);
+            return TypedActionResult.success(user.getStackInHand(hand), world.isClient());
         }
-
-        return TypedActionResult.success(user.getStackInHand(hand), world.isClient());
+        
+        return TypedActionResult.fail(user.getStackInHand(hand));
     }
 
     public abstract void onHit(PlayerEntity player, EntityHitResult target);
