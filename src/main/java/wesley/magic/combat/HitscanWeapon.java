@@ -8,7 +8,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.world.World;
-import wesley.magic.DarkMagicMod;
 import wesley.magic.utils.Hitscan;
 
 public abstract class HitscanWeapon extends Item {
@@ -23,12 +22,8 @@ public abstract class HitscanWeapon extends Item {
 
         // Perform hitscan
         EntityHitResult hit = Hitscan.playerHitscan(user, 20.0f);
-        DarkMagicMod.LOGGER.info("SHOOTIN");
 
         if (hit != null) {
-
-            DarkMagicMod.LOGGER.info(hit.toString());
-
             onHit(user, hit.getEntity());
         }
 
