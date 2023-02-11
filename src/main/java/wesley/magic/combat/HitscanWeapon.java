@@ -1,6 +1,5 @@
 package wesley.magic.combat;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
@@ -22,14 +21,14 @@ public abstract class HitscanWeapon extends DarkMagicItem {
         if (!world.isClient) return super.use(world, user, hand);
 
         // Perform hitscan
-        EntityHitResult hit = Hitscan.playerHitscan(user, 100.0f);
+        EntityHitResult hit = Hitscan.playerHitscan(user, 50.0f);
 
         if (hit != null) {
-            onHit(user, hit.getEntity());
+            onHit(user, hit);
         }
 
         return TypedActionResult.success(user.getStackInHand(hand), world.isClient());
     }
 
-    public abstract void onHit(PlayerEntity player, Entity target);
+    public abstract void onHit(PlayerEntity player, EntityHitResult target);
 }
