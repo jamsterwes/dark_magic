@@ -62,10 +62,7 @@ public class ScepterItem extends HitscanWeapon {
             ItemEntity itemEntity = (ItemEntity)hit.getEntity();
             ItemStack stack = itemEntity.getStack();
             Item output = ScepterCrafting.tryCraft(_material, stack.getItem());
-            DarkMagicMod.LOGGER.info("Trying to craft: " + stack.getItem().toString());
             if (output != null) {
-                // TODO: may need networking...
-                // itemEntity.setStack(new ItemStack(output, stack.getCount()));
                 CombatNetworking.transformItem(itemEntity, new ItemStack(output, stack.getCount()));
             }
         } else {
