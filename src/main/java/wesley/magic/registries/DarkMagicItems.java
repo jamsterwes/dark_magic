@@ -40,7 +40,7 @@ public class DarkMagicItems {
 
     public static final DarkMagicItem CRYSTAL_OF_BALOR = Registry.register(
         Registries.ITEM, new Identifier("dark_magic", "crystal_of_balor"),
-        new DarkMagicItem(CRYSTAL_OF_BALOR_LORE, new FabricItemSettings())
+        new DarkMagicItem(CRYSTAL_OF_BALOR_LORE, new FabricItemSettings().maxCount(1))
     );
 
 	// Items Tab
