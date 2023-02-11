@@ -5,12 +5,15 @@ import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import wesley.magic.scepters.ScepterCrafting;
 import wesley.magic.scepters.ScepterItem;
+import wesley.magic.scepters.ScepterMaterials;
 import wesley.magic.utils.DarkMagicItem.Lore;
 
 public class DarkMagicScepters {
@@ -20,7 +23,7 @@ public class DarkMagicScepters {
 
     public static final ScepterItem DIAMOND_SCEPTER = Registry.register(
         Registries.ITEM, new Identifier("dark_magic", "diamond_scepter"),
-        new ScepterItem(DIAMOND_SCEPTER_LORE, new FabricItemSettings().maxCount(1))
+        new ScepterItem(ScepterMaterials.DIAMOND, DIAMOND_SCEPTER_LORE, new FabricItemSettings().maxCount(1))
     );
 
 	// Scepter Tab
@@ -34,5 +37,8 @@ public class DarkMagicScepters {
 		ItemGroupEvents.modifyEntriesEvent(SCEPTERS_GROUP).register(content -> {
             content.add(DIAMOND_SCEPTER);
         });
+
+        // Register cursed book recipe
+        ScepterCrafting.addRecipe(ScepterMaterials.DIAMOND, Items.BOOK, DarkMagicItems.SUPERPOSITION_BOOK);
     }
 }

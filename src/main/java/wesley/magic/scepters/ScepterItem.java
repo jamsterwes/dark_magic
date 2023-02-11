@@ -1,5 +1,6 @@
 package wesley.magic.scepters;
 
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.particle.ParticleTypes;
@@ -11,6 +12,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import wesley.magic.DarkMagicMod;
 import wesley.magic.combat.CombatNetworking;
 import wesley.magic.combat.HitscanWeapon;
 
@@ -18,10 +20,12 @@ public class ScepterItem extends HitscanWeapon {
 
     private SoundEvent _useSound = SoundEvents.ENTITY_FIREWORK_ROCKET_LAUNCH;
     private int _cooldownTicks = 10;
+    private ScepterMaterials _material;
 
-    public ScepterItem(Lore lore, Settings settings) {
+    public ScepterItem(ScepterMaterials material, Lore lore, Settings settings) {
         // Initialize Item
         super(lore, settings);
+        this._material = material;
     }
 
     @Override
@@ -53,7 +57,20 @@ public class ScepterItem extends HitscanWeapon {
             player.world.addParticle(ParticleTypes.GLOW, pos.x, pos.y, pos.z, 0.0, 0.0, 0.0);
         }
 
-        // Damage entity
-        CombatNetworking.damageEntity(hit.getEntity(), 7.0f);
+        if (hit.getEntity() instanceof ItemEntity) {
+            // Try to craft
+            ItemEntity itemEntity = (ItemEntity)hit.getEntity();
+            ItemStack stack = itemEntity.getStack();
+            Item output = ScepterCrafting.tryCraft(_material, stack.getItem());
+            DarkMagicMod.LOGGER.info("Trying to craft: " + stack.getItem().toString());
+            if (output != null) {
+                // TODO: may need networking...
+                // itemEntity.setStack(new ItemStack(output, stack.getCount()));
+                CombatNetworking.transformItem(itemEntity, new ItemStack(output, stack.getCount()));
+            }
+        } else {
+            // Damage entity
+            CombatNetworking.damageEntity(hit.getEntity(), 7.0f);
+        }
     }
 }
