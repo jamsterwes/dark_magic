@@ -24,7 +24,7 @@ public class CombatNetworking {
     public static void damageEntity(Entity target, float damage) {
         // Prepare buffer {target: UUID, damage: float}
         PacketByteBuf buf = PacketByteBufs.create();
-        buf.writeUuid(target.getUuid());
+        buf.writeInt(target.getId());
         buf.writeFloat(damage);
 
         // Send damage entity packet to server
@@ -35,7 +35,11 @@ public class CombatNetworking {
         // Register DAMAGE_ENTITY handler
         ServerPlayNetworking.registerGlobalReceiver(Packets.DAMAGE_ENTITY, (MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) -> {
             // Unpack buffer {target: UUID, damage: float}
-            Entity target = player.getWorld().getEntity(buf.readUuid());
+            int targetID = buf.readInt();
+            Entity target = player.getWorld().getEntityById(targetID);
+
+            if (target == null) return;
+
             float damage = buf.readFloat();
 
             // Apply damage

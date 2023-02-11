@@ -17,22 +17,10 @@ public class ScepterItem extends HitscanWeapon {
     private SoundEvent _useSound = SoundEvents.BLOCK_AMETHYST_BLOCK_CHIME;
     private int _cooldownTicks = 10;
 
-    public ScepterItem(Settings settings) {
+    public ScepterItem(Lore lore, Settings settings) {
         // Initialize Item
-        super(settings);
+        super(lore, settings);
     }
-
-    // @Override
-    // public boolean hasGlint(ItemStack itemStack) {
-    //     return true;
-    // }
-
-    // @Override
-    // public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-    //     for (Text text : _props.lore) {
-    //         tooltip.add(text);
-    //     }
-    // }
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
