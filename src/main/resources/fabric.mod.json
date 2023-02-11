@@ -14,7 +14,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "wesley.magic.ExampleMod"
+      "wesley.magic.DarkMagicMod"
     ]
   },
   "mixins": [
