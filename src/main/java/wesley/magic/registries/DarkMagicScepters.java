@@ -1,4 +1,4 @@
-package wesley.magic.scepters;
+package wesley.magic.registries;
 
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import wesley.magic.scepters.ScepterItem;
 
 public class DarkMagicScepters {
     public static final ScepterItem DIAMOND_SCEPTER = Registry.register(
