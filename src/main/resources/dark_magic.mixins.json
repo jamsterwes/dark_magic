@@ -3,11 +3,8 @@
   "minVersion": "0.8",
   "package": "wesley.magic.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": [
-  ],
-  "client": [
-    "DevourMixin"
-  ],
+  "mixins": [],
+  "client": [],
   "injectors": {
     "defaultRequire": 1
   }
