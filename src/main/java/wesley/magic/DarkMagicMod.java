@@ -1,6 +1,7 @@
 package wesley.magic;
 
 import net.fabricmc.api.ModInitializer;
+import wesley.magic.combat.CombatNetworking;
 import wesley.magic.registries.DarkMagicScepters;
 
 import org.slf4j.Logger;
@@ -12,7 +13,10 @@ public class DarkMagicMod implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		// Register tomes
+		// Register networking
+		CombatNetworking.register();
+
+		// Register items
 		DarkMagicScepters.register();
 	}
 }
