@@ -43,6 +43,22 @@ public class DarkMagicItems {
         new DarkMagicItem(CRYSTAL_OF_BALOR_LORE, new FabricItemSettings().maxCount(1))
     );
 
+    // Dark Resources (TODO: "Dark Magic?")
+    public static final DarkMagicItem SOUL_FRAGMENT = Registry.register(
+        Registries.ITEM, new Identifier("dark_magic", "soul_fragment"),
+        new DarkMagicItem(new FabricItemSettings())
+    );
+
+    public static final DarkMagicItem SOUL_STONE = Registry.register(
+        Registries.ITEM, new Identifier("dark_magic", "soul_stone"),
+        new DarkMagicItem(new FabricItemSettings())
+    );
+
+    public static final DarkMagicItem SOUL_AXE = Registry.register(
+        Registries.ITEM, new Identifier("dark_magic", "soul_axe"),
+        new DarkMagicItem(new FabricItemSettings().maxCount(1))
+    );
+
 	// Items Tab
 	public static final ItemGroup ITEMS_GROUP = FabricItemGroup.builder(
 		new Identifier("dark_magic", "items"))
@@ -55,6 +71,9 @@ public class DarkMagicItems {
             content.add(SUPERPOSITION_BOOK);
             content.add(PARACAUSAL_CORE);
             content.add(CRYSTAL_OF_BALOR);
+            content.add(SOUL_FRAGMENT);
+            content.add(SOUL_STONE);
+            content.add(SOUL_AXE);
         });
     }
 }

@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "##",
+        "/#",
+        "/ "
+    ],
+    "key": {
+        "#": {
+            "item": "dark_magic:soul_stone"
+        },
+        "/": {
+            "item": "minecraft:blaze_rod"
+        }
+    },
+    "result": {
+        "item": "dark_magic:soul_axe",
+        "count": 1
+    }
+}

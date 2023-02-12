@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:smithing",
+    "base": {
+        "item": "minecraft:emerald"
+    },
+    "addition": {
+        "item": "minecraft:ghast_tear"
+    },
+    "result": {
+        "item": "dark_magic:life_stone"
+    }
+}

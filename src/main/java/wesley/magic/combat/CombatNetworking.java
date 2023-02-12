@@ -6,8 +6,10 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder.Living;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
@@ -57,8 +59,12 @@ public class CombatNetworking {
 
             float damage = buf.readFloat();
 
-            // Apply damage
-            target.damage(DamageSource.player(player), damage);
+            // Apply damage/heal
+            if (damage >= 0.0f) {
+                target.damage(DamageSource.player(player), damage);
+            } else if (target instanceof LivingEntity) {
+                ((LivingEntity)target).heal(-damage);
+            }
         });
 
         // Register DAMAGE_ENTITY handler
