@@ -11,7 +11,7 @@ import wesley.magic.combat.HitscanWeapon;
 
 public class ScepterItem extends HitscanWeapon {
 
-    private ScepterMaterials _material;
+    protected ScepterMaterials _material;
 
     public ScepterItem(ScepterMaterials material, Lore lore, Settings settings) {
         // Initialize Item

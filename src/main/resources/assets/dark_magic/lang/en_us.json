@@ -15,5 +15,7 @@
     "item.dark_magic.crystal_of_balor": "Crystal of Balor",
     "item.dark_magic.crystal_of_balor.lore1": "Lore line #1",
     "item.dark_magic.crystal_of_balor.lore2": "Lore line #2",
-    "item.dark_magic.crystal_of_balor.lore3": "+100% Range"
+    "item.dark_magic.crystal_of_balor.lore3": "+100% Range",
+    "key.dark_magic.alt_fire": "Alt Fire",
+    "category.dark_magic.magic_combat": "Magic Combat"
 }

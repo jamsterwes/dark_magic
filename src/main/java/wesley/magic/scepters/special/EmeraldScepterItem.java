@@ -17,6 +17,7 @@ public class EmeraldScepterItem extends ScepterItem {
 
     public EmeraldScepterItem(ScepterMaterials material, Lore lore, Settings settings) {
         super(material, lore, settings);
+        this.enableAltFire(this, _material.useSound);
     }
 
     @Override
@@ -28,5 +29,16 @@ public class EmeraldScepterItem extends ScepterItem {
         if (random.nextDouble() >= SELF_HEAL_CHANCE) {
             CombatNetworking.damageEntity(player, -SELF_HEAL_AMOUNT);
         }
+    }
+
+    @Override
+    public void altFire(PlayerEntity player) {
+        // Fully heal self
+        float maxHealth = player.getMaxHealth();
+        CombatNetworking.damageEntity(player, -maxHealth);
+
+        // TODO: move this elsewhere
+        // Do cooldown woo
+        player.getItemCooldownManager().set(this, _material.altCooldownTicks);
     }
 }

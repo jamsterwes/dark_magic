@@ -1,11 +1,14 @@
 package wesley.magic.combat;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.world.World;
+import wesley.magic.DarkMagicMod;
 import wesley.magic.registries.DarkMagicItems;
 import wesley.magic.utils.DarkMagicItem;
 import wesley.magic.utils.Hitscan;
@@ -14,6 +17,27 @@ public abstract class HitscanWeapon extends DarkMagicItem {
 
     public HitscanWeapon(Lore lore, Settings settings) {
         super(lore, settings);
+    }
+
+    // Used to enable alt fire
+    protected void enableAltFire(Item thisItem, SoundEvent altFireSound) {
+        // Register alt fire
+        DarkMagicKeybinds.listen(DarkMagicKeybinds.altFire, client -> {
+            // If no player, fail
+            if (client.player == null) return;
+
+            // ONLY ALT FIRE FROM MAIN HAND
+            ItemStack inHand = client.player.getStackInHand(Hand.MAIN_HAND);
+            if (inHand.getItem() == thisItem) {
+                // Check cooldown
+                if (!client.player.getItemCooldownManager().isCoolingDown(this)) {
+                    altFire(client.player);
+
+                    // TODO: move this elsewhere?
+                    client.player.playSound(altFireSound, 1.0f, 1.0f);
+                }
+            }
+        });
     }
 
     @Override
@@ -39,4 +63,5 @@ public abstract class HitscanWeapon extends DarkMagicItem {
     }
 
     public abstract void onHit(PlayerEntity player, EntityHitResult target);
+    public void altFire(PlayerEntity player) {}
 }
