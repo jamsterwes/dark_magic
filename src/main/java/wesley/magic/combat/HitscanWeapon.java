@@ -31,6 +31,10 @@ public abstract class HitscanWeapon extends DarkMagicItem {
             if (inHand.getItem() == thisItem) {
                 // Check cooldown
                 if (!client.player.getItemCooldownManager().isCoolingDown(this)) {
+                    // Play use animation
+                    client.player.swingHand(Hand.MAIN_HAND);
+
+                    // Call alt fire handler
                     altFire(client.player);
 
                     // TODO: move this elsewhere?
